@@ -5,16 +5,23 @@
   "main": "api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node api.js"
+    "start": "node api.js",
+    "swagger": "node swagger.js"
   },
-  "engines": {"node":"18.x"},
+  "engines": {
+    "node": "18.x"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type":"module",
+  "type": "module",
   "dependencies": {
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "mongoose": "^9.0.0"
+    "mongoose": "^9.0.0",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "swagger-autogen": "^2.23.7"
   }
 }

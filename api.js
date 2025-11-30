@@ -1,14 +1,20 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import swaggerUi from 'swagger-ui-express';
+import fs from 'fs';
 import Order from './models/order.js';
 
 dotenv.config();
 
 const app=express();
-const port=3000;
+const port=process.env.PORT || 3000;
 
 app.use(express.json());
+
+// Swagger UI
+const swaggerFile = JSON.parse(fs.readFileSync('./swagger_output.json', 'utf8'));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 const connect=async()=>{
     try{
