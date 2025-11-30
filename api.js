@@ -19,6 +19,19 @@ const connect=async()=>{
     }
 }
 
+function transformRequest(body){
+  return{
+    orderId:body.numeroPedido.replace("-01",""),
+    value:body.valorTotal,
+    creationDate:new Date(body.dataCriacao),
+    items:body.items.map(item=>({
+      productId:parseInt(item.idItem),
+      quantity:item.quantidadeItem,
+      price:item.valorItem
+    }))
+  };
+}
+
 //GETs
 app.get('/',(req,res)=>{
   res.send('Welcome to the API server!');
@@ -40,7 +53,8 @@ app.get('/order/:id',async(req,res)=>{
 //POSTs
 app.post('/order',async(req,res)=>{
     try{
-        const newOrder=await Order.create(req.body);
+        const transformedData=transformRequest(req.body);
+        const newOrder=await Order.create(transformedData);
         res.json(newOrder);
     }catch(error){
         res.status(500).json({error:error});
